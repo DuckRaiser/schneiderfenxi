@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>施耐德电气研究报告</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#f9f9f9] text-[#111] font-sans min-h-screen">
+    <header class="border-b border-gray-200 bg-white sticky top-0 z-10 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-emerald-600">
+                    <path d="M3 5.5L5 3.5M21 5.5L19 3.5M12 8.5V12.5L15 15.5M12 2.5C16.9706 2.5 21 6.52944 21 11.5C21 16.4706 16.9706 20.5 12 20.5C7.02944 20.5 3 16.4706 3 11.5C3 6.52944 7.02944 2.5 12 2.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1 class="text-xl font-semibold">施耐德电气研究报告</h1>
+            </div>
+            <div class="text-sm text-gray-500">更新时间：2024年6月</div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="mb-12 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-semibold mb-4">执行摘要</h2>
+            <div class="grid md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-medium mb-2 text-gray-700">成立时间</h3>
+                    <p class="text-3xl font-semibold">1836年</p>
+                    <p class="text-sm text-gray-500 mt-1">运营188年</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-medium mb-2 text-gray-700">收入（2023年）</h3>
+                    <p class="text-3xl font-semibold">345亿欧元</p>
+                    <p class="text-sm text-gray-500 mt-1">全球业务</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-medium mb-2 text-gray-700">员工人数</h3>
+                    <p class="text-3xl font-semibold">128,000+</p>
+                    <p class="text-sm text-gray-500 mt-1">遍布100多个国家</p>
+                </div>
+            </div>
+            <p class="mb-4">施耐德电气是一家专注于数字自动化和能源管理的法国跨国公司。作为行业全球领导者，施耐德最近正在实施其全球供应链战略的重大变革，将生产转移到更接近终端市场的地方，并投资于区域制造能力。</p>
+            <p>本研究报告考察了施耐德电气的供应链转型，重点关注其从中国向越南、欧洲和美国的转移。我们分析了公司的区域布局、业务部门和未来投资计划，以识别供应商进入施耐德供应链生态系统的机会。</p>
+        </section>
+
+        <section class="mb-12 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-semibold mb-4">供应链转型</h2>
+            <div class="grid md:grid-cols-2 gap-8 mb-6">
+                <div>
+                    <h3 class="text-lg font-medium mb-4">全球供应链转移</h3>
+                    <p class="mb-4">施耐德电气一直在战略性地重组其全球供应链网络，从集中式模式转向更区域化的方法。这种转变由以下因素推动：</p>
+                    <ul class="list-disc pl-5 mb-4 space-y-2">
+                        <li>地缘政治紧张局势影响贸易关系</li>
+                        <li>新冠疫情暴露了延伸供应链的脆弱性</li>
+                        <li>区域市场需求增长需要更快的响应时间</li>
+                        <li>可持续发展目标要求减少全球航运排放</li>
+                        <li>关键市场当地制造的政府激励措施</li>
+                    </ul>
+                    <p class="mb-2">公司现在旨在在销售产品的地区生产大部分产品，创造更具韧性和响应性的供应网络。</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-4">从中国转移生产</h3>
+                    <div class="h-80 w-full">
+                        <canvas id="supplyChainChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 text-center">从中国向区域制造中心的供应链转移</p>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h3 class="text-lg font-medium mb-4">主要区域供应链环节</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">地区</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">制造重点</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">关键材料</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">供应链战略</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">美国</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>断路器</li>
+                                        <li>配电盘</li>
+                                        <li>开关设备</li>
+                                        <li>数据中心设备</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>铜组件</li>
+                                        <li>镍</li>
+                                        <li>锂</li>
+                                        <li>电子产品</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>80%以上区域生产</li>
+                                        <li>扩大本地供应商基础</li>
+                                        <li>7亿美元新投资</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">欧洲</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>配电</li>
+                                        <li>自动化设备</li>
+                                        <li>能源管理系统</li>
+                                        <li>智能电网技术</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>铜组件</li>
+                                        <li>电子组件</li>
+                                        <li>工程塑料</li>
+                                        <li>特种金属</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>循环经济重点</li>
+                                        <li>可持续发展灯塔</li>
+                                        <li>欧洲供应链排名第一</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">越南</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>电气设备</li>
+                                        <li>楼宇自动化</li>
+                                        <li>控制系统</li>
+                                        <li>区域市场组件</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>铜母线</li>
+                                        <li>铜编织线</li>
+                                        <li>电缆和连接器</li>
+                                        <li>金属加工</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>亚太地区制造中心</li>
+                                        <li>中国生产替代方案</li>
+                                        <li>供应商发展重点</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-semibold mb-4">欧洲业务</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-medium mb-4">施耐德电气在欧洲</h3>
+                    <p class="mb-4">欧洲仍然是施耐德电气的核心区域，拥有强大的制造和创新能力。公司在欧洲取得了显著的认可：</p>
+                    <ul class="list-disc pl-5 mb-6 space-y-2">
+                        <li>连续三年在Gartner供应链25强：欧洲15强中排名第一</li>
+                        <li>实施了STRIVE战略（可持续、可信、韧性、智能、速度和效率）</li>
+                        <li>通过自适应机器学习开创"自愈"供应链，节省超过1亿欧元</li>
+                        <li>法国勒沃德勒伊工厂被世界经济论坛评为可持续发展灯塔</li>
+                    </ul>
+                    
+                    <p class="mb-4">施耐德电气的欧洲业务支持欧盟的绿色和数字转型议程，重点关注欧洲立法要求的循环经济倡议。</p>
+                </div>
+                <div>
+                    <div class="h-96 w-full">
+                        <canvas id="europeChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 text-center">施耐德电气在欧洲的主要位置和业务领域</p>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h3 class="text-lg font-medium mb-4">主要欧洲公司和设施</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">国家</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">位置</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">业务领域</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">显著特点</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">法国</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">勒沃德勒伊、格勒诺布尔、巴黎（总部）</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>配电</li>
+                                        <li>自动化</li>
+                                        <li>研发中心</li>
+                                        <li>公司治理</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">全球总部，可持续发展灯塔设施</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">德国</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">汉堡、拉尔、雷根斯堡</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>工业自动化</li>
+                                        <li>能源管理</li>
+                                        <li>数字解决方案</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">工业4.0实施，卓越制造</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">英国</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">利兹、伦敦、特尔福德、斯卡伯勒</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>软件开发</li>
+                                        <li>AVEVA解决方案</li>
+                                        <li>电力系统</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">AVEVA总部，软件创新</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">西班牙</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">巴塞罗那、瓦伦西亚</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>智能电网解决方案</li>
+                                        <li>可再生能源集成</li>
+                                        <li>中压设备</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">可再生能源重点，微电网解决方案</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">匈牙利</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">布达佩斯、扎拉埃格塞格</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>电子组件</li>
+                                        <li>控制系统</li>
+                                        <li>低压产品</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">新智能工厂，提高生产能力</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">波兰</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">华沙、格但斯克、布科诺</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>制造</li>
+                                        <li>电子组件</li>
+                                        <li>铜产品</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">不断增长的制造中心，熟练劳动力</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-semibold mb-4">越南业务</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-medium mb-4">施耐德电气在越南</h3>
+                    <p class="mb-4">越南已成为施耐德电气具有战略意义的重要制造中心，特别是随着公司将生产从中国转移。公司已建立：</p>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                        <h4 class="font-medium mb-2">施耐德电气制造越南有限公司</h4>
+                        <p class="text-sm mb-1"><span class="font-medium">位置：</span>胡志明市高科技园区D2街HT-2-3地块，平新郡新富B坊，胡志明市</p>
+                        <p class="text-sm"><span class="font-medium">重点：</span>电气设备制造，楼宇设备承包</p>
+                    </div>
+                    
+                    <p class="mb-4">施耐德电气越南服务于各个领域，包括：</p>
+                    <ul class="list-disc pl-5 mb-6 space-y-2">
+                        <li>智能工业</li>
+                        <li>韧性基础设施</li>
+                        <li>面向未来的数据中心</li>
+                        <li>智能建筑</li>
+                        <li>智能家居</li>
+                    </ul>
+                    
+                    <p>公司专注于在越南发展强大的供应商网络，为当地供应商提供支持和发展计划，以加入其生态系统。</p>
+                </div>
+                <div>
+                    <div class="h-80 w-full">
+                        <canvas id="vietnamChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 text-center">施耐德电气越南业务领域和供应链需求</p>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h3 class="text-lg font-medium mb-4">越南供应链机会</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">材料/组件</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">在施耐德产品中的应用</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">要求</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">进入机会</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">铜母线</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">配电、开关设备、配电盘</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>高导电性铜</li>
+                                        <li>精确尺寸</li>
+                                        <li>表面处理选项</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">高 - 越南设施专注于电气设备制造</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">铜编织线</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">接地系统、柔性连接</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>柔性结构</li>
+                                        <li>高电流容量</li>
+                                        <li>多种端接选项</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">中高 - 用于多个产品线</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">电缆</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">控制系统、电力连接、通信</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>安全认证</li>
+                                        <li>阻燃选项</li>
+                                        <li>环境合规性</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">中高 - 跨产品线的高需求量</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">金属触点</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">断路器、开关设备、控制设备</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>银/铜合金</li>
+                                        <li>精密制造</li>
+                                        <li>耐电弧性能</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">高 - 配电产品中的关键组件</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-semibold mb-4">美国业务</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-medium mb-4">施耐德电气在美国</h3>
+                    <p class="mb-4">美国是施耐德电气最大的区域市场。公司在美国拥有重要布局：</p>
+                    <ul class="list-disc pl-5 mb-6 space-y-2">
+                        <li>全国超过21,000名员工</li>
+                        <li>产品进入40%的美国家庭</li>
+                        <li>在美国运营超过100年</li>
+                        <li>北美总部位于马萨诸塞州波士顿</li>
+                    </ul>
+                    
+                    <p class="mb-4">施耐德电气正在美国进行其有史以来最大的资本投资，到2027年将投入7亿美元用于扩建和翻新六个州的八个设施。这是本十年北美地区10亿美元以上投资的一部分。</p>
+                    
+                    <p>公司旨在在当地生产约90%在该地区销售的产品，建立更具韧性的供应链，以更好地服务于数据中心、公用事业、制造业和能源基础设施领域不断增长的需求。</p>
+                </div>
+                <div>
+                    <div class="h-80 w-full">
+                        <canvas id="usChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 text-center">施耐德电气美国位置和业务领域</p>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h3 class="text-lg font-medium mb-4">主要美国设施和投资</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">位置</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">业务领域</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">投资重点</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">供应链机会</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">波士顿，马萨诸塞州（总部）</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">公司总部、研发</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">北美总部、创新中心</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">战略合作伙伴关系、技术解决方案</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">芒特朱丽叶，田纳西州</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">中压市场</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">新设施建设</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">中压组件、铜母线</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">安多弗，马萨诸塞州</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">数据中心、微电网研究</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">新实验室和研究设施</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">电力组件、连接解决方案</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">哥伦比亚，密苏里州</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">断路器</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">塑壳断路器和空气断路器生产扩建</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">金属触点、铜组件、精密零件</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">埃尔帕索，德克萨斯州</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">开关设备、配电</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">工厂扩建</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">铜母线、电缆、金属加工</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">列克星敦，肯塔基州</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">断路器、电气产品</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">自动化的新设备和机械</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">电子组件、金属零件</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-semibold mb-4">未来投资计划</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-6">
+                <div>
+                    <h3 class="text-lg font-medium mb-4">施耐德电气的投资战略</h3>
+                    <p class="mb-4">施耐德电气制定了一项雄心勃勃的投资战略，重点关注区域制造能力和数字转型。主要要素包括：</p>
+                    
+                    <ul class="list-disc pl-5 mb-6 space-y-2">
+                        <li>到2027年在美国业务投资7亿美元</li>
+                        <li>创造超过1,000个工程、制造和技术领域的新工作岗位</li>
+                        <li>在德克萨斯州埃尔帕索和墨西哥蒙特雷开设新工厂</li>
+                        <li>扩建墨西哥特拉斯卡拉现有设施</li>
+                        <li>发展镍和锂等关键材料的本地供应链</li>
+                        <li>在匈牙利开设新智能工厂以提高欧洲生产能力</li>
+                        <li>对越南业务进行重大投资以支持亚太地区增长</li>
+                    </ul>
+                    
+                    <p>这些投资由区域市场需求增长、疫情后需要更具韧性的供应链以及获得当地制造政府激励措施的机会推动。</p>
+                </div>
+                <div>
+                    <div class="h-80 w-full">
+                        <canvas id="investmentChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 text-center">施耐德电气未来投资重点领域</p>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <h3 class="text-lg font-medium mb-4">未来投资的主要业务领域</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-medium mb-2">数据中心</h4>
+                        <p class="text-sm mb-3">到2030年，数据中心电力需求可能翻倍，消耗美国高达9%的发电量。施耐德正在大力投资该领域的电力管理解决方案。</p>
+                        <h5 class="text-xs font-medium uppercase text-gray-500 mb-1">所需关键材料：</h5>
+                        <ul class="text-sm list-disc pl-5">
+                            <li>配电组件</li>
+                            <li>铜母线</li>
+                            <li>冷却系统组件</li>
+                            <li>UPS系统</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-medium mb-2">能源基础设施</h4>
+                        <p class="text-sm mb-3">可再生能源集成、微电网和智能电网技术的需求不断增长，以支持能源转型和电气化程度提高。</p>
+                        <h5 class="text-xs font-medium uppercase text-gray-500 mb-1">所需关键材料：</h5>
+                        <ul class="text-sm list-disc pl-5">
+                            <li>中压设备</li>
+                            <li>开关设备组件</li>
+                            <li>控制系统</li>
+                            <li>储能接口</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-medium mb-2">工业自动化</h4>
+                        <p class="text-sm mb-3">具有连接产品、自动化、软件和服务的AI驱动工业物联网解决方案，以提高制造效率。</p>
+                        <h5 class="text-xs font-medium uppercase text-gray-500 mb-1">所需关键材料：</h5>
+                        <ul class="text-sm list-disc pl-5">
+                            <li>传感器组件</li>
+                            <li>控制面板</li>
+                            <li>通信电缆</li>
+                            <li>精密金属零件</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-semibold mb-4">波兰供应商进入策略</h2>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-4">建议进入方法</h3>
+                <p class="mb-4">作为一家以铜母线、铜编织线、电缆、光纤和金属触点为主要业务，在中国、波兰和越南设有生产基地的制造企业，我们建议通过以下策略进入施耐德电气的供应链系统，从波兰开始：</p>
+                
+                <div class="bg-emerald-50 border border-emerald-100 rounded-lg p-4 mb-6">
+                    <h4 class="font-medium text-emerald-800 mb-2">战略建议</h4>
+                    <p class="text-sm text-emerald-700 mb-2">利用波兰业务作为进入施耐德电气欧洲供应链的主要切入点，随后扩展到美国市场，重点关注断路器、开关设备制造的铜母线和金属触点。</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h4 class="font-medium mb-3">第一步：通过波兰进入欧洲市场</h4>
+                        <ol class="list-decimal pl-5 space-y-2 text-sm">
+                            <li>在施耐德电气供应商门户注册为潜在供应商</li>
+                            <li>获得必要的欧洲认证（ISO 9001、ISO 14001、ISO 45001）</li>
+                            <li>最初专注于向施耐德的匈牙利和波兰设施供应铜母线和金属触点</li>
+                            <li>参与施耐德的供应商可持续发展计划，以符合其ESG目标</li>
+                            <li>发展与施耐德欧洲采购团队的关系</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h4 class="font-medium mb-3">第二步：从欧洲基地进入美国市场</h4>
+                        <ol class="list-decimal pl-5 space-y-2 text-sm">
+                            <li>利用成功的欧洲供应商关系接触美国采购团队</li>
+                            <li>专注于密苏里州哥伦比亚和德克萨斯州埃尔帕索的断路器和开关设备设施</li>
+                            <li>提供符合施耐德本地化战略要求的组件</li>
+                            <li>考虑建立美国制造基地以完全符合施耐德的区域生产模式</li>
+                            <li>发展支持施耐德数据中心和能源基础设施投资的能力</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-medium mb-4">施耐德电气进入目标产品</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">产品</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">战略重要性</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">目标设施</th>
+                                <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">所需认证</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">铜母线</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <div class="flex items-center">
+                                        <div class="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                            <div class="bg-emerald-500 h-full w-[90%]"></div>
+                                        </div>
+                                        <span class="ml-2">很高</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>匈牙利智能工厂</li>
+                                        <li>波兰设施</li>
+                                        <li>密苏里州哥伦比亚（美国）</li>
+                                        <li>德克萨斯州埃尔帕索（美国）</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>ISO 9001</li>
+                                        <li>ISO 14001</li>
+                                        <li>IEC标准</li>
+                                        <li>UL认证（美国）</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">金属触点</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <div class="flex items-center">
+                                        <div class="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                            <div class="bg-emerald-500 h-full w-[85%]"></div>
+                                        </div>
+                                        <span class="ml-2">高</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>密苏里州哥伦比亚（美国）</li>
+                                        <li>肯塔基州列克星敦（美国）</li>
+                                        <li>欧洲制造基地</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>ISO 9001</li>
+                                        <li>材料合规性</li>
+                                        <li>UL认可</li>
+                                        <li>RoHS合规性</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">铜编织线</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <div class="flex items-center">
+                                        <div class="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                            <div class="bg-emerald-500 h-full w-[70%]"></div>
+                                        </div>
+                                        <span class="ml-2">中高</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>多个欧洲基地</li>
+                                        <li>美国设施（第二阶段）</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>ISO 9001</li>
+                                        <li>电气安全标准</li>
+                                        <li>工厂验收测试</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">特种电缆</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <div class="flex items-center">
+                                        <div class="w-20 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                            <div class="bg-emerald-500 h-full w-[65%]"></div>
+                                        </div>
+                                        <span class="ml-2">中等</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>数据中心重点（马萨诸塞州安多弗）</li>
+                                        <li>工业自动化应用</li>
+                                    </ul>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <ul class="list-disc pl-5">
+                                        <li>ISO 9001</li>
+                                        <li>UL/CSA认证</li>
+                                        <li>阻燃等级</li>
+                                        <li>低烟无卤选项</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div>
+                <h3 class="text-lg font-medium mb-4">长期供应链整合战略</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-medium mb-2">第一阶段：波兰基地（1-2年）</h4>
+                        <ul class="text-sm list-disc pl-5 space-y-1">
+                            <li>专注于欧洲市场进入</li>
+                            <li>建立供应商关系和业绩记录</li>
+                            <li>符合施耐德的可持续发展倡议</li>
+                            <li>获得必要认证</li>
+                            <li>主要产品：铜母线和金属触点</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-medium mb-2">第二阶段：美国扩张（2-3年）</h4>
+                        <ul class="text-sm list-disc pl-5 space-y-1">
+                            <li>利用欧洲成功进入美国市场</li>
+                            <li>专注于断路器制造基地</li>
+                            <li>考虑美国仓储或生产</li>
+                            <li>扩大产品范围至特种电缆</li>
+                            <li>发展数据中心产品能力</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-medium mb-2">第三阶段：全球整合（3-5年）</h4>
+                        <ul class="text-sm list-disc pl-5 space-y-1">
+                            <li>激活越南生产基地供应亚太地区</li>
+                            <li>发展完整的区域供应能力</li>
+                            <li>参与施耐德的创新计划</li>
+                            <li>整合施耐德的数字供应链</li>
+                            <li>成为跨区域的战略全球供应商</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <h2 class="text-2xl font-semibold mb-4">结论</h2>
+            <p class="mb-4">施耐德电气正在对其全球供应链进行重大转型，从集中化模式转向更区域化的方法，使生产更接近终端市场。这一转变为铜母线、铜编织线、电缆、光纤和金属触点的供应商带来了重大机遇。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-medium mb-3">关键机遇</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm">
+                        <li>区域化生产战略创造新的本地供应需求</li>
+                        <li>数据中心和能源基础设施投资推动产品需求</li>
+                        <li>可持续发展倡议推动创新材料解决方案</li>
+                        <li>数字供应链转型提供效率提升机会</li>
+                        <li>跨区域扩张战略创造全球增长潜力</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-medium mb-3">成功因素</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm">
+                        <li>符合施耐德的可持续发展目标</li>
+                        <li>提供高质量、可靠的产品</li>
+                        <li>建立强大的本地生产能力</li>
+                        <li>发展创新解决方案能力</li>
+                        <li>保持灵活性和快速响应能力</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-6 bg-emerald-50 border border-emerald-100 rounded-lg p-4">
+                <h3 class="font-medium text-emerald-800 mb-2">战略建议</h3>
+                <p class="text-sm text-emerald-700">通过波兰基地进入施耐德电气的供应链系统，随后扩展到美国市场，重点关注断路器、开关设备制造的铜母线和金属触点。这一战略将充分利用施耐德的区域化趋势，同时建立长期可持续的供应商关系。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white py-6 border-t border-gray-200">
+        <div class="container mx-auto px-4 text-center text-sm text-gray-500">
+            <p class="mb-2">Built by Copper Joint SCM.</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script src="chart-supply-chain.js"></script>
+    <script src="chart-europe.js"></script>
+    <script src="chart-vietnam.js"></script>
+    <script src="chart-us.js"></script>
+    <script src="chart-investment.js"></script>
+</body>
+</html>
